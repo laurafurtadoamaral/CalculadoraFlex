@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Text, StyleSheet, Alert } from "react-native";
-import { SafeAreaProvider } from "react-native-safe-area-context";
 import { Button } from "react-native-paper";
 
 import Container from "./../components/container";
@@ -31,33 +30,31 @@ const Calculadora = () => {
   };
 
   return (
-    <SafeAreaProvider>
-      <Container>
-        <Header title={"Calculadora Flex"}></Header>
-        <Body>
-          <Input
-            label="Preço da Gasolina"
-            value={gas}
-            onChangeText={(text) => setGas(text)}
-          />
-          <Input
-            label="Preço do Etanol"
-            value={eta}
-            onChangeText={(text) => setEta(text)}
-          />
-          <Button
-            style={{ marginTop: 20 }}
-            labelStyle={{ fontSize: 18 }}
-            icon="calculator"
-            mode="contained"
-            onPress={handleCalcular}
-          >
-            Calcular
-          </Button>
-          <Text style={style.text_calculo}>{resp}</Text>
-        </Body>
-      </Container>
-    </SafeAreaProvider>
+    <Container>
+      <Header title={"Calculadora Flex"}></Header>
+      <Body>
+        <Input
+          label="Preço da Gasolina"
+          value={gas}
+          onChangeText={(text) => setGas(text)}
+        />
+        <Input
+          label="Preço do Etanol"
+          value={eta}
+          onChangeText={(text) => setEta(text)}
+        />
+        <Button
+          style={{ marginTop: 20 }}
+          labelStyle={{ fontSize: 18 }}
+          icon="calculator"
+          mode="contained"
+          onPress={handleCalcular}
+        >
+          Calcular
+        </Button>
+        <Text style={style.text_calculo}>{resp}</Text>
+      </Body>
+    </Container>
   );
 };
 
