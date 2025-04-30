@@ -6,17 +6,19 @@ const Input = (props) => {
   return (
     <TextInput
       mode="outlined"
-      outlineColor="purple" // Cor da borda do input quando não focado
+      //outlineColor="purple" // Cor da borda do input quando não focado
       style={style.input}
       keyboardType="decimal-pad"
-      theme={{
+      /*
+              theme={{
         colors: {
           primary: "yellow", // altera a borda do placeholder quando estiver focado
           background: "darkgray", // Cor de fundo do input (place holder)
         },
       }}
+        */
       //placeholder="R$ 0,00"
-      textColor="#fff" // do Place Holder
+      // textColor="#fff" // do Place Holder
       {...props}
     />
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { RadioButton, TextInput, Button, Appbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
@@ -10,17 +10,29 @@ import Container from "./../components/container";
 import Body from "./../components/Body";
 import Input from "./../components/Input";
 
-const Abastecimento = () => {
+const Abastecimento = ({ route }) => {
+  const { item } = route.params ? route.params : {};
   const navigation = useNavigation();
+
   const [date, setDate] = useState(new Date());
   const [show, setShow] = useState(false);
 
   const [tipo, setTipo] = useState("gas");
   const [preco, setPreco] = useState("");
   const [valor, setValor] = useState("");
-  const [data, setData] = useState("");
   const [odometro, setOdometro] = useState("");
+  const [data, setData] = useState(moment(new Date()).format("DD/MM/YYYY"));
   //const [id, setId] = useState("gas");
+
+  useEffect(() => {
+    if (item) {
+      setTipo(item.tipo == 0 ? "gas" : "eta");
+      setPreco(item.preco.toString());
+      setValor(item.valor.toString());
+      setOdometro(item.odometro.toString());
+      setData(item.data);
+    }
+  }, [item]);
 
   const handleSalvar = () => {
     alert("Salvo");
@@ -28,10 +40,6 @@ const Abastecimento = () => {
 
   const handleExcluir = () => {
     navigation.goBack();
-  };
-
-  const Oi = () => {
-    alert("Oi!");
   };
 
   return (
@@ -42,11 +50,13 @@ const Abastecimento = () => {
           color={"white"}
           onPress={handleSalvar}
         />
-        <Appbar.Action
-          icon="trash-can"
-          color={"white"}
-          onPress={handleExcluir}
-        />
+        {item && (
+          <Appbar.Action
+            icon="trash-can"
+            color={"white"}
+            onPress={handleExcluir}
+          />
+        )}
       </Header>
 
       <Body>
@@ -79,6 +89,7 @@ const Abastecimento = () => {
             value={date}
             mode={"date"}
             is24Hour={true}
+            display="spinner"
             onTouchCancel={() => setShow(false)}
             onChange={(event, date) => {
               setShow(false);
@@ -89,11 +100,12 @@ const Abastecimento = () => {
         <View style={styles.container_inputs}>
           <TouchableOpacity onPress={() => setShow(true)}>
             <Input
+              style={styles.input}
               label="Data"
               value={data}
-              left={<TextInput.Icon icon="calendar-month" color={"yellow"} />}
+              left={<TextInput.Icon icon="calendar-month" color={"purple"} />}
               editable={false}
-              pointerEvents="none" // para não bloquear eventos de toque
+              pointerEvents="none" // para não bloquear eventos de toque, libera o TouchableOpacity
             />
           </TouchableOpacity>
 
@@ -101,19 +113,19 @@ const Abastecimento = () => {
             label="Preço"
             value={preco}
             onChangeText={(text) => setPreco(text)}
-            left={<TextInput.Icon icon="currency-brl" color={"yellow"} />}
+            left={<TextInput.Icon icon="currency-brl" color={"purple"} />}
           />
           <Input
             label="Valor"
             value={valor}
             onChangeText={(text) => setValor(text)}
-            left={<TextInput.Icon icon="currency-brl" color={"yellow"} />}
+            left={<TextInput.Icon icon="currency-brl" color={"purple"} />}
           />
           <Input
             label="Hodômetro"
             value={odometro}
             onChangeText={(text) => setOdometro(text)}
-            left={<TextInput.Icon icon="gauge-full" color={"yellow"} />}
+            left={<TextInput.Icon icon="gauge-full" color={"purple"} />}
           />
           <View style={styles.container_buttons}>
             <Button
@@ -123,13 +135,15 @@ const Abastecimento = () => {
             >
               Salvar
             </Button>
-            <Button
-              buttonColor={"red"}
-              mode="contained"
-              onPress={handleExcluir}
-            >
-              Excluir
-            </Button>
+            {item && (
+              <Button
+                buttonColor={"red"}
+                mode="contained"
+                onPress={handleExcluir}
+              >
+                Excluir
+              </Button>
+            )}
           </View>
         </View>
       </Body>

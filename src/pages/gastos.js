@@ -7,6 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 import Header from "./../components/header";
 import Container from "./../components/container";
 import Body from "./../components/Body";
+import Abastecimento from "./abastecimento";
 
 const DATA = [
   {
@@ -35,37 +36,38 @@ const DATA = [
   },
 ];
 
-const renderItem = ({ item }) => (
-  <List.Item
-    title={
-      (item.tipo == 0 ? "Gasolina" : "Etanol") +
-      " - R$ " +
-      item.valor.toFixed(2)
-    }
-    description={
-      "R$ " +
-      item.preco.toFixed(2) +
-      " /L      " +
-      item.odometro.toLocaleString("pt-BR") +
-      " km"
-    }
-    left={(props) => (
-      <List.Icon
-        {...props}
-        color={item.tipo == 0 ? "orange" : "green"}
-        icon="gas-station"
-      />
-    )}
-    right={(props) => (
-      <Text {...props} style={{ alignSelf: "center" }}>
-        {item.data}
-      </Text>
-    )}
-  />
-);
-
 const Gastos = () => {
   const navigation = useNavigation();
+
+  const renderItem = ({ item }) => (
+    <List.Item
+      title={
+        (item.tipo == 0 ? "Gasolina" : "Etanol") +
+        " - R$ " +
+        item.valor.toFixed(2)
+      }
+      description={
+        "R$ " +
+        item.preco.toFixed(2) +
+        " /L      " +
+        item.odometro.toLocaleString("pt-BR") +
+        " km"
+      }
+      left={(props) => (
+        <List.Icon
+          {...props}
+          color={item.tipo == 0 ? "orange" : "green"}
+          icon="gas-station"
+        />
+      )}
+      right={(props) => (
+        <Text {...props} style={{ alignSelf: "center" }}>
+          {item.data}
+        </Text>
+      )}
+      onPress={() => navigation.navigate("Abastecimento", { item })}
+    />
+  );
 
   return (
     <Container>
