@@ -15,7 +15,7 @@ const Input = (props) => {
           background: "darkgray", // Cor de fundo do input (place holder)
         },
       }}
-      placeholder="R$ 0,00"
+      //placeholder="R$ 0,00"
       textColor="#fff" // do Place Holder
       {...props}
     />
