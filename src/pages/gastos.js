@@ -2,6 +2,7 @@ import React from "react";
 import { View, FlatList, StyleSheet, Text, StatusBar } from "react-native";
 import { List } from "react-native-paper";
 import { FAB } from "react-native-paper";
+import { useNavigation } from "@react-navigation/native";
 
 import Header from "./../components/header";
 import Container from "./../components/container";
@@ -36,8 +37,18 @@ const DATA = [
 
 const renderItem = ({ item }) => (
   <List.Item
-    title={item.tipo == 0 ? "Gasolina" : "Etanol"}
-    description={item.valor + " (R$ " + item.preco + " /L)" + item.odometro}
+    title={
+      (item.tipo == 0 ? "Gasolina" : "Etanol") +
+      " - R$ " +
+      item.valor.toFixed(2)
+    }
+    description={
+      "R$ " +
+      item.preco.toFixed(2) +
+      " /L      " +
+      item.odometro.toLocaleString("pt-BR") +
+      " km"
+    }
     left={(props) => (
       <List.Icon
         {...props}
@@ -54,6 +65,8 @@ const renderItem = ({ item }) => (
 );
 
 const Gastos = () => {
+  const navigation = useNavigation();
+
   return (
     <Container>
       <Header title={"Fuel Manager"}></Header>
@@ -66,7 +79,7 @@ const Gastos = () => {
         <FAB
           icon="plus"
           style={styles.fab}
-          onPress={() => console.log("Pressed")}
+          onPress={() => navigation.navigate("Abastecimento")}
         />
       </Body>
     </Container>

@@ -1,11 +1,17 @@
 // npx expo start
 
 import React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { NavigationIndependentTree } from "@react-navigation/native";
 
-import Home from "../src/pages/home";
+import Main from "../src/navigation/Main";
 
 const App = () => {
-  return <Home />;
+  return (
+    <NavigationIndependentTree>
+      <Main />
+    </NavigationIndependentTree>
+  );
 };
 
 export default App;

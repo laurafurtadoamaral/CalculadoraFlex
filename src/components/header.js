@@ -2,9 +2,10 @@ import React from "react";
 import { StyleSheet } from "react-native";
 import { Appbar } from "react-native-paper";
 
-const Header = ({ title }) => {
+const Header = ({ title, goBack }) => {
   return (
     <Appbar.Header style={style.header}>
+      {goBack && <Appbar.BackAction onPress={goBack} color="white" />}
       <Appbar.Content title={title} titleStyle={style.header_title} />
     </Appbar.Header>
   );
@@ -13,6 +14,7 @@ const Header = ({ title }) => {
 const style = StyleSheet.create({
   header: {
     backgroundColor: "purple",
+    color: "#fff",
   },
 
   header_title: {
