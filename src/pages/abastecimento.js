@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { RadioButton, TextInput, Button, Appbar } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
+import DateTimePicker from "@react-native-community/datetimepicker";
+import moment from "moment";
 
 import Header from "./../components/header";
 import Container from "./../components/container";
@@ -10,6 +12,8 @@ import Input from "./../components/Input";
 
 const Abastecimento = () => {
   const navigation = useNavigation();
+  const [date, setDate] = useState(new Date());
+  const [show, setShow] = useState(false);
 
   const [tipo, setTipo] = useState("gas");
   const [preco, setPreco] = useState("");
@@ -24,6 +28,10 @@ const Abastecimento = () => {
 
   const handleExcluir = () => {
     navigation.goBack();
+  };
+
+  const Oi = () => {
+    alert("Oi!");
   };
 
   return (
@@ -64,13 +72,30 @@ const Abastecimento = () => {
             <Text>Etanol</Text>
           </View>
         </View>
-        <View style={styles.container_inputs}>
-          <Input
-            label="Data"
-            value={data}
-            onChangeText={(text) => setData(text)}
-            left={<TextInput.Icon icon="calendar-month" color={"yellow"} />}
+
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={"date"}
+            is24Hour={true}
+            onTouchCancel={() => setShow(false)}
+            onChange={(event, date) => {
+              setShow(false);
+              setData(moment(date).format("DD/MM/YYYY"));
+            }}
           />
+        )}
+        <View style={styles.container_inputs}>
+          <TouchableOpacity onPress={() => setShow(true)}>
+            <Input
+              label="Data"
+              value={data}
+              left={<TextInput.Icon icon="calendar-month" color={"yellow"} />}
+              editable={false}
+              pointerEvents="none" // para não bloquear eventos de toque
+            />
+          </TouchableOpacity>
 
           <Input
             label="Preço"
