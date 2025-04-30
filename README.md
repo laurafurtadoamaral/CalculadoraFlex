@@ -1,3 +1,19 @@
+# Abrir o app
+
+```bash
+npx expo start
+
+npx expo start --clear
+```
+
+# Criação do Banco de Dados local
+
+Apenas na minha máquina e apenas para o projeto atual
+
+```bash
+npx expo install expo-sqlite
+```
+
 # Welcome to your Expo app 👋
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).

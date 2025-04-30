@@ -9,6 +9,7 @@ import Header from "./../components/header";
 import Container from "./../components/container";
 import Body from "./../components/Body";
 import Input from "./../components/Input";
+import { insertGastos } from "./../services/GastosServiceDb";
 
 const Abastecimento = ({ route }) => {
   const { item } = route.params ? route.params : {};
@@ -34,8 +35,40 @@ const Abastecimento = ({ route }) => {
     }
   }, [item]);
 
+  /*  const handleSalvar = () => {
+    if (!item) {
+      insertGastos({
+        tipo: tipo == "gas" ? 1 : 0,
+        data: data,
+        preco: preco,
+        valor: valor,
+        odometro: odometro,
+      }).then();
+    } else {
+    }
+    navigation.goBack();
+  };
+*/
+
   const handleSalvar = () => {
-    alert("Salvo");
+    if (!item) {
+      insertGastos({
+        tipo: tipo === "gas" ? 0 : 1, // 0 para gasolina, 1 para etanol
+        data: data,
+        preco: parseFloat(preco), // Converte para número decimal
+        valor: parseFloat(valor), // Converte para número decimal
+        odometro: parseInt(odometro), // Converte para número inteiro
+      })
+        .then(() => {
+          console.log("Gasto salvo com sucesso!");
+          navigation.goBack();
+        })
+        .catch((error) => {
+          console.error("Erro ao salvar gasto:", error);
+        });
+    } else {
+      // Lógica para atualizar um gasto existente (se necessário)
+    }
   };
 
   const handleExcluir = () => {
